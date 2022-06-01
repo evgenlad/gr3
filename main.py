@@ -30,13 +30,15 @@ class graph:
 		x1 = np.array([0])
 		y1 = np.array([0])
 		if self.ind == 0:
-			(self.x, self.f) = gfu.tf1(a, b, n)
+			ax.title.set_text('M.1')
+			(self.x, self.f) = gfu.tf1(self.a, self.b, self.n)
 			ap = np.zeros(self.n)
 			T = np.zeros(self.n)
 			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
 			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
 		if self.ind == 1:
-			(self.x, self.f) = gfu.tf2(a, b, n)
+			ax.title.set_text('M.2')
+			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
 			ap1 = np.zeros(self.n - 3)
 			ap = np.array([ap1, ap1, ap1, ap1])
 			func2.coef(self.n, self.x, self.f, ap)
@@ -48,12 +50,18 @@ class graph:
 		plt.draw()
 	def plus(self, event): #для текущего метода(если функция задана формулой) добавить точки
 		self.n += 10
-		(self.x, self.f) = gfu.tf1(self.a, self.b, self.n)
-		ap = np.zeros(self.n)
-		T = np.zeros(self.n)
 		if self.ind == 0:
+			(self.x, self.f) = gfu.tf1(self.a, self.b, self.n)
+			ap = np.zeros(self.n)
+			T = np.zeros(self.n)
 			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
-		(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+		if self.id == 1:
+			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func2.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
 		ax.title.set_text('Adjusted')
@@ -62,12 +70,18 @@ class graph:
 		if self.n < 11:
 			return 0
 		self.n -= 10
-		(self.x, self.f) = gfu.tf1(self.a, self.b, self.n)
-		ap = np.zeros(self.n)
-		T = np.zeros(self.n)
 		if self.ind == 0:
+			(self.x, self.f) = gfu.tf1(self.a, self.b, self.n)
+			ap = np.zeros(self.n)
+			T = np.zeros(self.n)
 			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
-		(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+		if self.ind == 1:
+			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func2.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
 		ax.title.set_text('Adjusted')
@@ -100,6 +114,7 @@ axprev = plt.axes([0.7, 0.05, 0.1, 0.075])
 axnext = plt.axes([0.81, 0.05, 0.1, 0.075])
 axdrev = plt.axes([0.59, 0.05, 0.1, 0.075])
 axdelta = plt.axes([0.48, 0.05, 0.1, 0.075])
+
 
 callback = graph()
 callback.x = x
