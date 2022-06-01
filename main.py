@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 import func1
 import func2
+import func3
 import gfu
 
 class graph:
@@ -14,12 +15,24 @@ class graph:
 	x = []
 	f = []
 	def delta(self, event):
-		ap = np.zeros(self.n)
-		T = np.zeros(self.n)
 		self.f[self.n//2] += 0.5
 		if self.ind == 0:
+			ap = np.zeros(self.n)
+			T = np.zeros(self.n)
 			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
-		(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+		if self.ind == 1:
+			ax.title.set_text('M.2')
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func2.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
+		if self.ind == 2:
+			ax.title.set_text('M.3')
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func3.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
 		ax.title.set_text('Adjusted')
@@ -43,6 +56,13 @@ class graph:
 			ap = np.array([ap1, ap1, ap1, ap1])
 			func2.coef(self.n, self.x, self.f, ap)
 			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
+		if self.ind == 2:
+			ax.title.set_text('M.3')
+			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func3.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		#(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
@@ -62,6 +82,12 @@ class graph:
 			ap = np.array([ap1, ap1, ap1, ap1])
 			func2.coef(self.n, self.x, self.f, ap)
 			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
+		if self.id == 2:
+			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func3.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
 		ax.title.set_text('Adjusted')
@@ -82,6 +108,12 @@ class graph:
 			ap = np.array([ap1, ap1, ap1, ap1])
 			func2.coef(self.n, self.x, self.f, ap)
 			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
+		if self.ind == 2:
+			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func3.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
 		ax.title.set_text('Adjusted')
@@ -138,7 +170,18 @@ axButn1 = plt.axes([0.1, 0.1, 0.1, 0.1])
 btn1 = Button(
 axButn1, label="Home", color='pink', hovercolor='tomato')
 
+#p1, = plt.plot(np.array([0]), np.array([0]), '^--b', linewidth=1.5, alpha=0.5)
 def plot1(event):
+	#ax.cla()
+	#p, = plt.plot(x, f, '.--g', linewidth=2.5, alpha=0.8)
+	#ax.title.set_text('Adjusted')
+	#p1.remove()
+	callback.x = x
+	callback.f = f
+	callback.n = n
+	callback.a = a
+	callback.b = b
+	callback.id = id
 	p.set_xdata(x)
 	p.set_ydata(f)
 	ax.title.set_text('Given linear')
@@ -155,6 +198,8 @@ def plot2(event):
 	#p.set_ydata(f)
 	ax.title.set_text('Adjusted')
 	ax.plot(callback.x, callback.f, color="blue", marker="^")
+	#plt.plot(callback.x, callback.f, '^--b', linewidth=1.5, alpha=0.5)
+
 btn2.on_clicked(plot2)
 
 #axButn3 = plt.axes([0.5, 0.1, 0.1, 0.1])

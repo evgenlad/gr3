@@ -25,7 +25,7 @@ def coef(n, x, f, ap):
     df = (f[1:n] - f[0:(n-1)])/dx
     w = np.abs(df[1:(n-1)] - df[0:(n-2)])
     d = np.zeros(n-2) # d[0] = d_2
-    d = (w[3:(n-1)]*df[0:(n-2)] + w[1:(n-3)]*df[1:(n-1)])/(w[3:(n-1)] + w[1:(n-3)])
+    d[1:(n-3)] = (w[2:(n-2)]*df[1:(n-3)] + w[0:(n-4)]*df[2:(n-2)])/(w[2:(n-2)] + w[0:(n-4)])
     #ck_2 = c[0]
     c1 = np.zeros(n-3)
     c2 = np.zeros(n-3)
