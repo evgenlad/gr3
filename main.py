@@ -35,7 +35,30 @@ class graph:
 			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
-		ax.title.set_text('Adjusted')
+		ax.title.set_text('Added delta +0.5, now f(x_{med}) = %f' % self.f[self.n//2])
+		plt.draw()
+	def deltam(self, event):
+		self.f[self.n//2] -= 0.5
+		if self.ind == 0:
+			ap = np.zeros(self.n)
+			T = np.zeros(self.n)
+			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
+			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+		if self.ind == 1:
+			ax.title.set_text('M.2')
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func2.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
+		if self.ind == 2:
+			ax.title.set_text('M.3')
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func3.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
+		p.set_xdata(x1)
+		p.set_ydata(y1)
+		ax.title.set_text('Substracted delta -0.5, now f(x_{med}) = %f' % self.f[self.n//2])
 		plt.draw()
 	def change(self, event):
 		self.ind += 1
@@ -72,7 +95,7 @@ class graph:
 		#(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
-		ax.title.set_text('Adjusted')
+		#ax.title.set_text('Adjusted')
 		plt.draw()
 	def plus(self, event): #для текущего метода(если функция задана формулой) добавить точки
 		self.n += 10
@@ -96,7 +119,7 @@ class graph:
 			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
-		ax.title.set_text('Adjusted')
+		ax.title.set_text('Added 10; n = %d' % self.n)
 		plt.draw()
 	def minus(self, event):
 		if self.n < 11:
@@ -122,7 +145,7 @@ class graph:
 			(x1, y1) = func3.calc_given(self.a, self.b, self.n, self.x, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
-		ax.title.set_text('Adjusted')
+		ax.title.set_text('Substracted 10; n = %d' % self.n)
 		plt.draw()
 
 print('a')
@@ -152,7 +175,7 @@ axprev = plt.axes([0.7, 0.05, 0.1, 0.075])
 axnext = plt.axes([0.81, 0.05, 0.1, 0.075])
 axdrev = plt.axes([0.59, 0.05, 0.1, 0.075])
 axdelta = plt.axes([0.48, 0.05, 0.1, 0.075])
-
+axdeltam = plt.axes([0.37, 0.05, 0.1, 0.075])
 
 callback = graph()
 callback.x = x
@@ -171,6 +194,9 @@ if id == 1:
 	bdrev.on_clicked(callback.minus)
 bdelta = Button(axdelta, 'delta')
 bdelta.on_clicked(callback.delta)
+
+bdeltam = Button(axdeltam, 'deltam')
+bdeltam.on_clicked(callback.deltam)
 
 axButn1 = plt.axes([0.1, 0.1, 0.1, 0.1])
 btn1 = Button(
