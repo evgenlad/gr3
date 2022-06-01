@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 import func1
+import func2
 import gfu
 
 class graph:
@@ -26,11 +27,21 @@ class graph:
 	def change(self, event):
 		self.ind += 1
 		self.ind = self.ind % 3
-		ap = np.zeros(self.n)
-		T = np.zeros(self.n)
+		x1 = np.array([0])
+		y1 = np.array([0])
 		if self.ind == 0:
+			(self.x, self.f) = gfu.tf1(a, b, n)
+			ap = np.zeros(self.n)
+			T = np.zeros(self.n)
 			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
-		(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
+		if self.ind == 1:
+			(self.x, self.f) = gfu.tf2(a, b, n)
+			ap1 = np.zeros(self.n - 3)
+			ap = np.array([ap1, ap1, ap1, ap1])
+			func2.coef(self.n, self.x, self.f, ap)
+			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
+		#(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
 		p.set_xdata(x1)
 		p.set_ydata(y1)
 		ax.title.set_text('Adjusted')

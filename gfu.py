@@ -22,3 +22,11 @@ def tf1(a, b, n):
         x[m] = (a+b)/2 + ((b-a)/2)*np.cos(np.pi*(2*m-1)/(2*n))
     f1 = f(x)
     return (x, f1)
+
+def tf2(a, b, n):
+    x = np.linspace(a, b, n)
+    print(x)
+    f1 = f(x)
+    return (x, f1)
+
+

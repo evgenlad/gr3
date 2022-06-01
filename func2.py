@@ -18,18 +18,22 @@ def pol(a, b, n, x, x0, ap):
         return (ap[0][n-3] + ap[1][n-3] * (x0 - x[i]) + ap[2][n-3] * ((x0 - x[i]) ** 2) + ap[3][n-3] * (
                 (x0 - x[i]) ** 3))
 
-def coef(a, b, n, x, f, ap):
-    df = np.zeros[n-1] #df[i] = f(x_i; x_{i+1})
-    dx = np.zeros[n-1]
+def coef(n, x, f, ap):
+    df = np.zeros(n-1) #df[i] = f(x_i; x_{i+1})
+    dx = np.zeros(n-1)
+    print("1-n",x[1:n])
+    print("0, n-1",x[0:(n-1)])
     dx = x[1:n] - x[0:(n-1)]
+    print(x)
+    print(dx)
     df = (f[1:n] - f[0:(n-1)])/(x[1:n] - x[0:(n-1)])
-    d = np.zeros[n-2] # d[0] = d_2
+    d = np.zeros(n-2) # d[0] = d_2
     d = (dx[1:(n-1)]*df[0:(n-2)] + dx[0:(n-2)]*df[1:(n-1)])/(dx[1:(n-1)] + dx[0:(n-2)])
     #ck_2 = c[0]
-    c1 = np.zeros[n-3]
-    c2 = np.zeros[n-3]
-    c3 = np.zeros[n-3]
-    c4 = np.zeros[n-3]
+    c1 = np.zeros(n-3)
+    c2 = np.zeros(n-3)
+    c3 = np.zeros(n-3)
+    c4 = np.zeros(n-3)
     c1 = f[1:(n-3)]
     c2 = d[0:(n-3)]
     c3 = (3*df[1:(n-2)] - 2*d[0:(n-3)] - d[1:(n-2)])/dx[1:(n-2)]
