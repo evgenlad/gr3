@@ -44,21 +44,27 @@ class graph:
 		y1 = np.array([0])
 		if self.ind == 0:
 			ax.title.set_text('M.1')
+			loc_f = self.f[self.n//2]
 			(self.x, self.f) = gfu.tf1(self.a, self.b, self.n)
+			self.f[self.n // 2] = loc_f
 			ap = np.zeros(self.n)
 			T = np.zeros(self.n)
 			func1.coef(self.a, self.b, self.n, self.x, self.f, ap, T)
 			(x1, y1) = func1.calc_given(self.a, self.b, self.n, ap)
 		if self.ind == 1:
 			ax.title.set_text('M.2')
+			loc_f = self.f[self.n//2]
 			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			self.f[self.n // 2] = loc_f
 			ap1 = np.zeros(self.n - 3)
 			ap = np.array([ap1, ap1, ap1, ap1])
 			func2.coef(self.n, self.x, self.f, ap)
 			(x1, y1) = func2.calc_given(self.a, self.b, self.n, self.x, ap)
 		if self.ind == 2:
 			ax.title.set_text('M.3')
+			loc_f = self.f[self.n//2]
 			(self.x, self.f) = gfu.tf2(self.a, self.b, self.n)
+			self.f[self.n // 2] = loc_f
 			ap1 = np.zeros(self.n - 3)
 			ap = np.array([ap1, ap1, ap1, ap1])
 			func3.coef(self.n, self.x, self.f, ap)
